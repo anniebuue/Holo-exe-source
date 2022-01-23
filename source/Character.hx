@@ -33,6 +33,29 @@ class Character extends FlxSprite
 
 		switch (curCharacter)
 		{
+			case 'suisei':
+				//suisex
+
+				frames = Paths.getSparrowAtlas('characters/SuisexAssets');
+				animation.addByPrefix('idle', 'suiseiIDLE', 24);
+				animation.addByPrefix('singUP', 'suiseiUP', 24);
+				animation.addByPrefix('singRIGHT', 'suiseiRIGHT', 24);
+				animation.addByPrefix('singDOWN', 'suiseiDOWN', 24);
+				animation.addByPrefix('singLEFT', 'suiseiLEFT', 24);
+
+				animation.addByPrefix('singDOWN-alt', 'suiseiUP', 24);
+				animation.addByPrefix('singLAUGH', 'suiseiUP', 24);
+
+				addOffset('idle');
+				addOffset("singUP", -5, 51);
+				addOffset("singRIGHT", -35, -15);
+				addOffset("singLEFT", 291, 54);
+				addOffset("singDOWN", 10, 10);
+				addOffset("singDOWN-alt", -5, 51);
+				addOffset("singLAUGH", -5, 51);
+
+				playAnim('idle');
+
 			case 'gf':
 				// GIRLFRIEND CODE
 				tex = Paths.getSparrowAtlas('characters/GF_assets');

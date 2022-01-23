@@ -43,6 +43,7 @@ class HealthIcon extends FlxSprite
 		animation.add('bf-perspective-flipped', [0, 1], 0, false, isPlayer);
 		animation.add('bf-pixel', [44, 45], 0, false, isPlayer);
 		animation.add('bf-flipped', [0, 1], 0, false, isPlayer);
+		animation.add('suisei', [57, 56], 0, false, isPlayer);
 		animation.play(char);
 
 		switch (char)

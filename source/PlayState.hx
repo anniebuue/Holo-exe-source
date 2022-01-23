@@ -1487,8 +1487,8 @@ class PlayState extends MusicBeatState
 
 			case 'SONICstage':
 				boyfriend.y += 25;
-				dad.y += 200;
-				dad.x += 200;
+				dad.y += 100;
+				//dad.x += 200;
 				dad.scale.x = 1.1;
 				dad.scale.y = 1.1;
 				dad.scrollFactor.set(1.37, 1);
@@ -4388,6 +4388,9 @@ class PlayState extends MusicBeatState
 
 					switch (dad.curCharacter) // camerathingy for diffrent enemies
 					{
+						case 'suisei':
+							camFollow.y = dad.getMidpoint().x + 10;
+							camFollow.y = dad.getMidpoint().y;
 						case 'sonic':
 							camFollow.y = dad.getMidpoint().y - 30;
 							camFollow.x = dad.getMidpoint().x + 120;
@@ -6378,7 +6381,7 @@ class PlayState extends MusicBeatState
 			resyncVocals();
 		}
 
-		if (dad.curCharacter == 'sonic' && SONG.song.toLowerCase() == 'too-slow')
+		if (SONG.song.toLowerCase() == 'too-slow')
 		{
 			switch (curStep)
 			{
@@ -6388,7 +6391,7 @@ class PlayState extends MusicBeatState
 				case 1305:
 					cameramove = false;
 					FlxTween.tween(camHUD, {alpha: 0}, 0.3);
-					dad.playAnim('iamgod', true);
+					if (dad.curCharacter == 'sonic')	dad.playAnim('iamgod', true);
 					dad.nonanimated = true;
 				case 1362:
 					FlxG.camera.shake(0.002, 0.6);
