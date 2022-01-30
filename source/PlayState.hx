@@ -148,6 +148,7 @@ class PlayState extends MusicBeatState
 
 	public static var strumLineNotes:FlxTypedGroup<FlxSprite> = null;
 	public static var playerStrums:FlxTypedGroup<FlxSprite> = null;
+	public static var playerSplashes:FlxTypedGroup<FlxSprite> = null;
 	public static var cpuStrums:FlxTypedGroup<FlxSprite> = null;
 
 	private var camZooming:Bool = false;
@@ -882,6 +883,8 @@ class PlayState extends MusicBeatState
 		add(strumLineNotes);
 
 		playerStrums = new FlxTypedGroup<FlxSprite>();
+		playerSplashes = new FlxTypedGroup<FlxSprite>();
+		add(playerSplashes);
 		cpuStrums = new FlxTypedGroup<FlxSprite>();
 
 		generateStaticArrows(0);
@@ -1022,6 +1025,7 @@ class PlayState extends MusicBeatState
 		add(iconP2);
 
 		strumLineNotes.cameras = [camHUD];
+		playerSplashes.cameras = [camHUD];
 		notes.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
 		healthBarBG.cameras = [camHUD];
@@ -1836,6 +1840,17 @@ class PlayState extends MusicBeatState
 			// FlxG.log.add(i);
 			var babyArrow:FlxSprite = new FlxSprite(0, strumLine.y);
 
+			//blood splash lol
+			var bloodSplash:FlxSprite = new FlxSprite(0, strumLine.y - 80); // i have no idea on what am i doing
+			if (player == 1)
+			{
+				bloodSplash.frames = Paths.getSparrowAtlas('BloodSplash', 'exe');
+				bloodSplash.animation.addByPrefix('a', 'Squirt', 24, false);
+				bloodSplash.animation.play('a');
+				bloodSplash.antialiasing = true;
+				bloodSplash.animation.curAnim.curFrame = 10;
+			}
+
 			// defaults if no noteStyle was found in chart
 			var noteTypeCheck:String = 'normal';
 
@@ -1925,7 +1940,16 @@ class PlayState extends MusicBeatState
 				FlxTween.tween(babyArrow, {y: babyArrow.y + 10, alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
 			}
 
+			if (curSong != 'endless' && curSong != 'milk' && player == 1)
+			{
+				bloodSplash.x = babyArrow.x + 520;
+				playerSplashes.add(bloodSplash);
+			}
+
 			babyArrow.ID = i;
+
+			if (player == 1)
+				bloodSplash.ID = i;
 
 			switch (player)
 			{
@@ -3039,6 +3063,18 @@ class PlayState extends MusicBeatState
 					daNote.modAngle = strumLineNotes.members[Math.floor(Math.abs(daNote.noteData))].angle;
 				}
 
+				playerSplashes.forEach(function(spr:FlxSprite)
+				{
+					playerStrums.forEach(function(spr2:FlxSprite)
+					{
+						if (spr.ID == spr2.ID)
+						{
+							spr.x = spr2.x - 68;
+							spr.y = spr2.y - 20;
+						}
+					});
+				});
+
 				if (daNote.isSustainNote)
 				{
 					daNote.x += daNote.width / 2 + 20;
@@ -3453,6 +3489,11 @@ class PlayState extends MusicBeatState
 					totalNotesHit += 1;
 				curSongRatings[0]++;
 				sicks++;
+				playerSplashes.forEach(function(spr:FlxSprite)
+				{
+					if (spr.ID == daNote.noteData)
+						spr.animation.play('a', true);
+				});
 		}
 
 

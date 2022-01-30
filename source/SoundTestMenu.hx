@@ -258,7 +258,7 @@ class SoundTestMenu extends MusicBeatState
 		{
 			LoadingState.loadAndSwitchState(new PlayState());
 		});
-		if (!FlxG.save.data.songArray.contains(song) && !FlxG.save.data.botplay) FlxG.save.data.songArray.push(song);
+		//if (!FlxG.save.data.songArray.contains(song) && !FlxG.save.data.botplay) FlxG.save.data.songArray.push(song);
     }
 
 	function loadCameo(onComplete:()->Void) //load cameo shit idk lol
