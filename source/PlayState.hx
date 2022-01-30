@@ -278,7 +278,7 @@ class PlayState extends MusicBeatState
 	var bfcamY:Int = 0;
 	var camX:Int = 0;
 	var camY:Int = 0;
-	var cameramove:Bool = FlxG.save.data.cammove;
+	var cameramove:Bool = true;
 	var tailscircle:String = '';
 	var bgspec:FlxSprite;
 
@@ -292,9 +292,16 @@ class PlayState extends MusicBeatState
 	//demo only!!
 	var fuckingThing:FlxSprite;
 
+	//SKIP INTRO STUFF
+	var skipIntroText:FlxText;
+	var skipSongs:Array<Array<Dynamic>> = [
+		['too-seiso', 240]
+	];
+	var curSkip:Array<Dynamic>;
+
 	var daJumpscare:FlxSprite = new FlxSprite(0, 0);
 
-	var lowQuality:Bool = FlxG.save.data.lq;
+	var lowQuality:Bool = false;
 
 	// API stuff
 
@@ -1112,6 +1119,23 @@ class PlayState extends MusicBeatState
 			add(sex);
 		}
 
+		//now for the skip stuff
+		for (song in skipSongs)
+		{
+			if (song[0] == SONG.song)
+			{
+				curSkip = song;
+
+				skipIntroText = new FlxText(0, 0, 1280, "Press Space to Skip Intro", 48);
+				skipIntroText.setFormat(Paths.font("vcr.ttf"), 48, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+				skipIntroText.cameras = [camHUD];
+				skipIntroText.screenCenter();
+				skipIntroText.y = 480;
+				skipIntroText.alpha = 0;
+				add(skipIntroText);
+			}
+		}
+
 		super.create();
 	}
 
@@ -1636,6 +1660,9 @@ class PlayState extends MusicBeatState
 		for(i in 0...unspawnNotes.length)
 			if (unspawnNotes[i].strumTime < startTime)
 				unspawnNotes.remove(unspawnNotes[i]);
+
+		//skip intro fade in
+		if (skipIntroText != null) FlxTween.tween(skipIntroText, {alpha: 1}, 1);
 	}
 
 	var debugNum:Int = 0;
@@ -3166,6 +3193,15 @@ class PlayState extends MusicBeatState
 			ratingsCounter.members[i].text = ratingNames[i] + ": " + Std.string(curSongRatings[i]);
 		}
 
+		//Skip intro
+		if (skipIntroText != null)
+		{
+			if (FlxG.keys.justPressed.SPACE)
+			{
+				if (curStep < curSkip[1])	FlxG.sound.music.time = Conductor.stepCrochet * curSkip[1];
+			}
+		}
+
 		if (!inCutscene && songStarted)
 			keyShit();
 
@@ -4371,6 +4407,12 @@ class PlayState extends MusicBeatState
 			resyncVocals();
 		}
 
+		//fade away skip intro
+		if (skipIntroText != null) 
+			{
+				if (curStep == curSkip[1] + 1) FlxTween.tween(skipIntroText, {alpha: 0}, 1, {ease: FlxEase.cubeIn});
+			}
+
 		#if windows
 		if (executeModchart && luaModchart != null)
 		{
@@ -4427,7 +4469,7 @@ class PlayState extends MusicBeatState
 					fuckingThing.alpha = 0;
 					fuckingThing.cameras = [camHUD2];
 					add(fuckingThing);
-					FlxTween.tween(fuckingThing, {alpha: 1, zoom: 1.3}, 15);
+					FlxTween.tween(fuckingThing, {alpha: 1}, 15);
 
 				case 1362:
 					FlxG.camera.shake(0.002, 0.6);
