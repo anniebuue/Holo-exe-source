@@ -48,7 +48,7 @@ class MainMenuState extends MusicBeatState
 
 	public static var nightly:String = "";
 
-	public static var kadeEngineVer:String = "1.5.4" + nightly;
+	public static var kadeEngineVer:String = "1.6" + nightly;
 	public static var gameVer:String = "0.2.7.1";
 
 	var bgdesat:FlxSprite;
@@ -74,14 +74,14 @@ class MainMenuState extends MusicBeatState
 
 		if (!FlxG.sound.music.playing)
 		{
-			FlxG.sound.playMusic(Paths.music('MainMenuMusic'));
+			FlxG.sound.playMusic(Paths.music('MainMenuMusic', 'exe'));
 		}
 
-		FlxG.sound.playMusic(Paths.music('MainMenuMusic'));
+		FlxG.sound.playMusic(Paths.music('MainMenuMusic', 'exe'));
 
 		persistentUpdate = persistentDraw = true;
 
-		var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('backgroundlool'));
+		var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('menu/backgroundlool', 'exe'));
 		bg.scrollFactor.x = 0;
 		bg.scrollFactor.y = 0;
 		bg.setGraphicSize(Std.int(bg.width * .5));
@@ -90,7 +90,7 @@ class MainMenuState extends MusicBeatState
 		bg.antialiasing = true;
 		add(bg);
 
-		bgdesat = new FlxSprite(-80).loadGraphic(Paths.image('backgroundlool2'));
+		bgdesat = new FlxSprite(-80).loadGraphic(Paths.image('menu/backgroundlool2', 'exe'));
 		bgdesat.scrollFactor.x = 0;
 		bgdesat.scrollFactor.y = 0;
 		bgdesat.setGraphicSize(Std.int(bgdesat.width * .5));
@@ -102,21 +102,21 @@ class MainMenuState extends MusicBeatState
 		add(bgdesat);
 		// bgdesat.scrollFactor.set();
 
-		arrows = new FlxSprite(92, 182).loadGraphic(Paths.image('funniArrows'));
+		arrows = new FlxSprite(92, 182).loadGraphic(Paths.image('menu/funniArrows', 'exe'));
 		arrows.scrollFactor.set();
 		arrows.antialiasing = true;
 		arrows.updateHitbox();
 		add(arrows);
 		FlxTween.tween(arrows, {y: arrows.y - 50}, 1, {ease: FlxEase.quadInOut, type: PINGPONG});
 
-		spikeUp = new FlxSprite(0, -65).loadGraphic(Paths.image('spikeUp'));
+		spikeUp = new FlxSprite(0, -65).loadGraphic(Paths.image('menu/spikeUp', 'exe'));
 		spikeUp.scrollFactor.x = 0;
 		spikeUp.scrollFactor.y = 0;
 		spikeUp.updateHitbox();
 		spikeUp.antialiasing = true;
 		
 
-		spikeDown = new FlxSprite(-60 , 630).loadGraphic(Paths.image('spikeDown'));
+		spikeDown = new FlxSprite(-60 , 630).loadGraphic(Paths.image('menu/spikeDown', 'exe'));
 		spikeDown.scrollFactor.x = 0;
 		spikeDown.scrollFactor.y = 0;
 		spikeDown.updateHitbox();
@@ -130,7 +130,7 @@ class MainMenuState extends MusicBeatState
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
-		var tex = Paths.getSparrowAtlas('FNF_main_menu_assets');
+		var tex = Paths.getSparrowAtlas('menu/FNF_main_menu_assets', 'exe');
 
 		for (i in 0...optionShit.length)
 		{
@@ -189,6 +189,19 @@ class MainMenuState extends MusicBeatState
 
 		changeItem();
 
+		if (!FlxG.save.data.antialiasing)
+		{
+			bg.antialiasing = false;
+			bgdesat.antialiasing = false;
+			arrows.antialiasing = false;
+			spikeDown.antialiasing = false;
+			spikeUp.antialiasing = false;
+
+			menuItems.forEach(function(box:FlxSprite){
+				box.antialiasing = false;
+			});
+		}
+
 		super.create();
 	}
 
@@ -196,7 +209,7 @@ class MainMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		#if debug
+		//#if debug
 		if (FlxG.keys.justPressed.R)
 		{
 			FlxG.save.data.storyProgress = 1;
@@ -204,7 +217,7 @@ class MainMenuState extends MusicBeatState
 			FlxG.save.data.songArray = ["endless", 'cycles',"milk", "sunshine", 'faker', 'black-sun', "chaos"];
 			FlxG.switchState(new MainMenuState());
 		}
-		#end
+		//#end
 
 		if (FlxG.keys.justPressed.DELETE)
 		{
@@ -298,7 +311,7 @@ class MainMenuState extends MusicBeatState
 					if (soundCooldown)
 					{
 						soundCooldown = false;
-						FlxG.sound.play(Paths.sound('deniedMOMENT'));
+						FlxG.sound.play(Paths.sound('deniedMOMENT', 'exe'));
 						new FlxTimer().start(0.8, function(tmr:FlxTimer)
 						{
 							soundCooldown = true;

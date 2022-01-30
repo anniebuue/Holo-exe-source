@@ -44,13 +44,14 @@ class StoryMenuState extends MusicBeatState
 
 	var selection:Bool = false;
 
-	var songArray = ['too-slow', 'you-cant-run', 'triple-trouble'];
+	var songArray = ['too-seiso'];
 
 	var staticscreen:FlxSprite;
 	var portrait:FlxSprite;
 
 	override function create()
 	{
+		/*
 		switch (FlxG.save.data.storyProgress)
 		{
 			case 1:
@@ -58,13 +59,14 @@ class StoryMenuState extends MusicBeatState
 			case 2:
 				songArray = ['too-slow', 'you-cant-run', 'triple-trouble'];
 		}
+		*/
 
-		FlxG.sound.playMusic(Paths.music('storymodemenumusic'));
+		FlxG.sound.playMusic(Paths.music('StoryMode', 'exe'));
 
 		var bg:FlxSprite;
 
 		bg = new FlxSprite(0, 0);
-		bg.frames = Paths.getSparrowAtlas('SMMStatic', 'exe');
+		bg.frames = Paths.getSparrowAtlas('story/SMMStatic', 'exe');
 		bg.animation.addByPrefix('idlexd', "damfstatic", 24);
 		bg.animation.play('idlexd');
 		bg.alpha = 1;
@@ -74,7 +76,7 @@ class StoryMenuState extends MusicBeatState
 		add(bg);
 
 		var greyBOX:FlxSprite;
-		greyBOX = new FlxSprite(0, 0).loadGraphic(Paths.image('greybox'));
+		greyBOX = new FlxSprite(0, 0).loadGraphic(Paths.image('story/greybox', 'exe'));
 		bg.alpha = 1;
 		greyBOX.antialiasing = true;
 		greyBOX.setGraphicSize(Std.int(bg.width));
@@ -90,14 +92,14 @@ class StoryMenuState extends MusicBeatState
 		bfIDLELAWL.animation.play('idleLAWLAW', true);
 		add(bfIDLELAWL);
 
-		portrait = new FlxSprite(450, 79).loadGraphic(Paths.image('fpstuff/too-slow'));
+		portrait = new FlxSprite(450, 79).loadGraphic(Paths.image('portraits/too-seiso', 'exe'));
 		portrait.setGraphicSize(Std.int(portrait.width * 0.275));
 		portrait.antialiasing = true;
 		portrait.updateHitbox();
 		add(portrait);
 
 		staticscreen = new FlxSprite(450, 0);
-		staticscreen.frames = Paths.getSparrowAtlas('screenstatic', 'exe');
+		staticscreen.frames = Paths.getSparrowAtlas('story/screenstatic', 'exe');
 		staticscreen.animation.addByPrefix('screenstaticANIM', "screenSTATIC", 24);
 		staticscreen.animation.play('screenstaticANIM');
 		staticscreen.y += 79;
@@ -108,14 +110,14 @@ class StoryMenuState extends MusicBeatState
 		add(staticscreen);
 
 		var yellowBOX:FlxSprite;
-		yellowBOX = new FlxSprite(0, 0).loadGraphic(Paths.image('yellowbox'));
+		yellowBOX = new FlxSprite(0, 0).loadGraphic(Paths.image('story/yellowbox', 'exe'));
 		yellowBOX.alpha = 1;
 		yellowBOX.antialiasing = true;
 		yellowBOX.setGraphicSize(Std.int(bg.width));
 		yellowBOX.updateHitbox();
 		add(yellowBOX);
 
-		redBOX = new FlxSprite(0, 0).loadGraphic(Paths.image('redbox'));
+		redBOX = new FlxSprite(0, 0).loadGraphic(Paths.image('story/redbox', 'exe'));
 		redBOX.alpha = 1;
 		redBOX.antialiasing = true;
 		redBOX.setGraphicSize(Std.int(bg.width));
@@ -147,7 +149,7 @@ class StoryMenuState extends MusicBeatState
 		add(rightArrow);
 
 		leftArrow2 = new FlxSprite(325, 136 + 5);
-		leftArrow2.frames = Paths.getSparrowAtlas('campaign_menu_UI_assets_alt');
+		leftArrow2.frames = Paths.getSparrowAtlas('story/campaign_menu_UI_assets_alt', 'exe');
 		leftArrow2.setGraphicSize(Std.int(leftArrow2.width * 0.8));
 		leftArrow2.animation.addByPrefix('idle', "arrow left");
 		leftArrow2.animation.addByPrefix('press', "arrow push left");
@@ -155,7 +157,7 @@ class StoryMenuState extends MusicBeatState
 		add(leftArrow2);
 
 		rightArrow2 = new FlxSprite(820, 136 + 5);
-		rightArrow2.frames = Paths.getSparrowAtlas('campaign_menu_UI_assets_alt');
+		rightArrow2.frames = Paths.getSparrowAtlas('story/campaign_menu_UI_assets_alt', 'exe');
 		rightArrow2.setGraphicSize(Std.int(rightArrow2.width * 0.8));
 		rightArrow2.animation.addByPrefix('idle', "arrow right");
 		rightArrow2.animation.addByPrefix('press', "arrow push right");
@@ -164,6 +166,22 @@ class StoryMenuState extends MusicBeatState
 
 		sprDifficulty.offset.x = 70;
 		sprDifficulty.y = leftArrow.y + 10;
+
+		if (!FlxG.save.data.antialiasing)
+		{
+			bg.antialiasing = false;
+			greyBOX.antialiasing = false;
+			bfIDLELAWL.antialiasing = false;
+			portrait.antialiasing = false;
+			staticscreen.antialiasing = false;
+			yellowBOX.antialiasing = false;
+			redBOX.antialiasing = false;
+			sprDifficulty.antialiasing = false;
+			leftArrow.antialiasing = false;
+			rightArrow.antialiasing = false;
+			leftArrow2.antialiasing = false;
+			rightArrow2.antialiasing = false;
+		};
 
 		super.create();
 	}
@@ -208,7 +226,7 @@ class StoryMenuState extends MusicBeatState
 			else if (real > songArray.length - 1)
 				real = 0;
 
-			portrait.loadGraphic(Paths.image('fpstuff/' + songArray[real]));
+			portrait.loadGraphic(Paths.image('portraits/' + songArray[real], 'exe'));
 
 			FlxTween.cancelTweensOf(staticscreen);
 			staticscreen.alpha = 1;
@@ -284,7 +302,7 @@ class StoryMenuState extends MusicBeatState
 
 				if (FlxG.save.data.storyProgress == 0)
 				{
-					PlayState.storyPlaylist = ['too-slow', 'you-cant-run', 'triple-trouble'];
+					PlayState.storyPlaylist = ['too-seiso'];
 					PlayState.isStoryMode = true;
 					switch (curdiff)
 					{
@@ -303,7 +321,7 @@ class StoryMenuState extends MusicBeatState
 				}
 				else
 				{
-					if (songArray[real] == 'too-slow')
+					if (songArray[real] == 'too-seiso')
 					{
 						switch (curdiff)
 						{
@@ -332,8 +350,9 @@ class StoryMenuState extends MusicBeatState
 					PlayState.storyWeek = 1;
 				}
 
-				if (songArray[real] == 'too-slow')
+				if (songArray[real] == 'too-seiso')
 				{
+					/*
 					new FlxTimer().start(1, function(tmr:FlxTimer)
 					{
 						// LoadingState.loadAndSwitchState(new PlayState(), true); //save this code for the cutsceneless build of the game
@@ -344,6 +363,9 @@ class StoryMenuState extends MusicBeatState
 							LoadingState.loadAndSwitchState(new PlayState());
 						}
 					});
+					*/
+					//eh fuck that dont feel like it
+					LoadingState.loadAndSwitchState(new PlayState());
 				}
 			}
 
@@ -355,4 +377,61 @@ class StoryMenuState extends MusicBeatState
 
 		super.update(elapsed);
 	}
+}
+
+class StoryModeMenuBFidle extends FlxSprite
+{
+    public var lolanimOffsets:Map<String, Array<Dynamic>>;
+	public var loldebugMode:Bool = false;
+
+	public var lolcurCharacter:String = 'bf';
+
+	public var lolholdTimer:Float = 0;
+
+    public function new(x:Float, y:Float)
+        {
+            super(x, y);
+
+            lolanimOffsets = new Map<String, Array<Dynamic>>();
+
+
+            var tex:FlxAtlasFrames;
+            antialiasing = true;
+
+            tex = Paths.getSparrowAtlas('characters/BOYFRIEND', 'shared');
+			frames = tex;
+			animation.addByPrefix('idleLAWLAW', 'BF idle dance', 24, true);
+
+
+            addOffset('idleLAWLAW', -5);
+        }
+
+        public function playAnim(AnimName:String, Force:Bool = false, Reversed:Bool = false, Frame:Int = 0):Void
+            {
+                animation.play(AnimName, Force, Reversed, Frame);
+        
+                var daOffset = lolanimOffsets.get(AnimName);
+                if (lolanimOffsets.exists(AnimName))
+                {
+                    offset.set(daOffset[0], daOffset[1]);
+                }
+                else
+                    offset.set(0, 0);
+        
+                
+            }
+
+            public function addOffset(name:String, x:Float = 0, y:Float = 0)
+                {
+                    lolanimOffsets[name] = [x, y];
+                }
+        
+        override function update(elapsed:Float)
+            {
+
+
+
+                super.update(elapsed);
+            }
+            
 }

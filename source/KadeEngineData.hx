@@ -6,41 +6,20 @@ class KadeEngineData
 {
     public static function initSave()
     {
-		if (FlxG.save.data.songArray == null) FlxG.save.data.songArray = [];
-		
-		if (FlxG.save.data.storyProgress == null) // Data erase fuck you.
-		{
-			FlxG.save.data.storyProgress = 0;
-			FlxG.save.data.soundTestUnlocked = false;
-			
-		}
+        if (FlxG.save.data.weekUnlocked == null)
+			FlxG.save.data.weekUnlocked = 7;
 
-		if (FlxG.save.data.lq == null)
-			FlxG.save.data.lq = false;
-
-		if (FlxG.save.data.vfx == null)
-			FlxG.save.data.vfx = true;
-
-		if (FlxG.save.data.cammove == null)
-			FlxG.save.data.cammove = true;
-
-		if (FlxG.save.data.splashing == null)
-			FlxG.save.data.splashing = true;
-
-		if (FlxG.save.data.jumpscares == null)
-			FlxG.save.data.jumpscares = true;
-
-		if (FlxG.save.data.soundTestUnlocked == null)
-			FlxG.save.data.soundTestUnlocked = false;
-
-        if (FlxG.save.data.newInput == null)
+		if (FlxG.save.data.newInput == null)
 			FlxG.save.data.newInput = true;
 
 		if (FlxG.save.data.downscroll == null)
 			FlxG.save.data.downscroll = false;
-	
-		if (FlxG.save.data.midscroll == null)
-			FlxG.save.data.midscroll = false;
+
+		if (FlxG.save.data.antialiasing == null)
+			FlxG.save.data.antialiasing = true;
+
+		if (FlxG.save.data.missSounds == null)
+			FlxG.save.data.missSounds = true;
 
 		if (FlxG.save.data.dfjk == null)
 			FlxG.save.data.dfjk = false;
@@ -93,6 +72,9 @@ class KadeEngineData
 
 		if (FlxG.save.data.distractions == null)
 			FlxG.save.data.distractions = true;
+		
+		if (FlxG.save.data.stepMania == null)
+			FlxG.save.data.stepMania = false;
 
 		if (FlxG.save.data.flashing == null)
 			FlxG.save.data.flashing = true;
@@ -124,6 +106,9 @@ class KadeEngineData
 		if (FlxG.save.data.optimize == null)
 			FlxG.save.data.optimize = false;
 		
+		if (FlxG.save.data.cacheImages == null)
+			FlxG.save.data.cacheImages = false;
+
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 		
 		KeyBinds.gamepad = gamepad != null;

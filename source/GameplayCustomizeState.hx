@@ -23,6 +23,8 @@ class GameplayCustomizeState extends MusicBeatState
     var defaultY:Float = FlxG.height / 2 - 50;
 
     var background:FlxSprite;
+    var curt:FlxSprite;
+    var front:FlxSprite;
 
     var sick:FlxSprite;
 
@@ -31,6 +33,7 @@ class GameplayCustomizeState extends MusicBeatState
 
     var bf:Boyfriend;
     var dad:Character;
+    var gf:Character;
 
     var strumLine:FlxSprite;
     var strumLineNotes:FlxTypedGroup<FlxSprite>;
@@ -40,15 +43,16 @@ class GameplayCustomizeState extends MusicBeatState
     public override function create() {
         #if windows
 		// Updating Discord Rich Presence
-		DiscordClient.changePresence("Customizing Gameplay", null);
+		DiscordClient.changePresence("Customizing Gameplay Modules", null);
 		#end
 
         sick = new FlxSprite().loadGraphic(Paths.image('sick','shared'));
         sick.scrollFactor.set();
-        background = new FlxSprite(-600, -200).loadGraphic(Paths.image('SonicStages/floor1','exe'));
-        
+        background = new FlxSprite(-600, -200).loadGraphic(Paths.image('stageback','shared'));
+        curt = new FlxSprite(-500, -300).loadGraphic(Paths.image('stagecurtains','shared'));
+        front = new FlxSprite(-650, 600).loadGraphic(Paths.image('stagefront','shared'));
 
-		Conductor.changeBPM(102);
+		//Conductor.changeBPM(102);
 		persistentUpdate = true;
 
         super.create();
@@ -58,20 +62,27 @@ class GameplayCustomizeState extends MusicBeatState
         FlxG.cameras.add(camHUD);
 
         background.scrollFactor.set(0.9,0.9);
+        curt.scrollFactor.set(0.9,0.9);
+        front.scrollFactor.set(0.9,0.9);
 
         add(background);
-       
-        
+        add(front);
+        add(curt);
+
 		var camFollow = new FlxObject(0, 0, 1, 1);
 
-		dad = new Character(100, 100, 'sonic');
+		dad = new Character(100, 100, 'dad');
 
         bf = new Boyfriend(770, 450, 'bf');
+
+        gf = new Character(400, 130, 'gf');
+		gf.scrollFactor.set(0.95, 0.95);
 
 		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x + 400, dad.getGraphicMidpoint().y);
 
 		camFollow.setPosition(camPos.x, camPos.y);
 
+        add(gf);
         add(bf);
         add(dad);
 
@@ -105,7 +116,7 @@ class GameplayCustomizeState extends MusicBeatState
 		generateStaticArrows(0);
 		generateStaticArrows(1);
 
-        text = new FlxText(5, FlxG.height + 40, 0, "Drag around gameplay elements, R to reset, Escape to go back.", 12);
+        text = new FlxText(5, FlxG.height + 40, 0, "Click and drag around gameplay elements to customize their positions.\nPress R to reset.\nPress Escape to go back.", 12);
 		text.scrollFactor.set();
 		text.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         
@@ -182,8 +193,9 @@ class GameplayCustomizeState extends MusicBeatState
     {
         super.beatHit();
 
-        bf.playAnim('idle');
-        dad.dance();
+        bf.playAnim('idle', true);
+        dad.dance(true);
+        gf.dance();
 
         FlxG.camera.zoom += 0.015;
         camHUD.zoom += 0.010;

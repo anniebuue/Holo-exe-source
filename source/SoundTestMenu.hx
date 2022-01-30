@@ -63,7 +63,7 @@ class SoundTestMenu extends MusicBeatState
 
 			FlxG.sound.music.stop();
 
-			var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('backgroundST'));
+			var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('backgroundST', 'exe'));
 			bg.scrollFactor.x = 0;
 			bg.scrollFactor.y = 0;
 			bg.setGraphicSize(Std.int(bg.width * 1));
@@ -161,262 +161,55 @@ class SoundTestMenu extends MusicBeatState
 
 	function doTheThing(first:Int, second:Int) 
 	{
-		if (first == 12 && second == 25)
-		{
-			woahmanstopspammin = false;
-			PlayStateChangeables.nocheese = false;
-			PlayState.SONG = Song.loadFromJson('endless-hard', 'endless');
-			PlayState.isFreeplay = false;
-			PlayState.isStoryMode = false;
-			PlayState.storyDifficulty = 2;
-			PlayState.storyWeek = 1;
-			FlxTransitionableState.skipNextTransIn = true;
-			FlxTransitionableState.skipNextTransOut = true;
-			flashyWashy(true);
-			new FlxTimer().start(2, function(tmr:FlxTimer)
-			{
-				LoadingState.loadAndSwitchState(new PlayState());
-			});
-			if (!FlxG.save.data.songArray.contains('endless') && !FlxG.save.data.botplay) FlxG.save.data.songArray.push('endless');
-		}
-		else if (first == 7 && second == 7)
-			{
-				woahmanstopspammin = false;
-				PlayStateChangeables.nocheese = false;
-				PlayState.isFreeplay = false;
-				PlayState.SONG = Song.loadFromJson('cycles-hard', 'cycles');
-				PlayState.isStoryMode = false;
-				PlayState.storyDifficulty = 2;
-				PlayState.storyWeek = 1;
-				FlxTransitionableState.skipNextTransIn = true;
-				FlxTransitionableState.skipNextTransOut = true;
-				flashyWashy(true);
-				new FlxTimer().start(2, function(tmr:FlxTimer)
-				{
-					LoadingState.loadAndSwitchState(new PlayState());
-				});
-				if (!FlxG.save.data.songArray.contains('cycles') && !FlxG.save.data.botplay) FlxG.save.data.songArray.push('cycles');
-			}
-		else if (first == 31 && second == 13)
-			{
-				woahmanstopspammin = false;
-				PlayStateChangeables.nocheese = false;
-				PlayState.isFreeplay = false;
-				PlayState.storyPlaylist = ['faker', 'black-sun'];
-				PlayState.SONG = Song.loadFromJson('faker-hard', 'faker');
-				PlayState.isStoryMode = false;
-				PlayState.isList = true;
-				PlayState.storyDifficulty = 2;
-				PlayState.storyWeek = 1;
-				FlxTransitionableState.skipNextTransIn = true;
-				FlxTransitionableState.skipNextTransOut = true;
-				flashyWashy(true);
-				new FlxTimer().start(2, function(tmr:FlxTimer)
-				{
-					LoadingState.loadAndSwitchState(new PlayState());
-				});
-				if (!FlxG.save.data.songArray.contains('faker') && !FlxG.save.data.botplay) FlxG.save.data.songArray.push('faker');
-			}
-		else if (first == 66 && second == 6)
-			{
-				woahmanstopspammin = false;
-				PlayStateChangeables.nocheese = false;
-				PlayState.isFreeplay = false;
-				PlayState.SONG = Song.loadFromJson('sunshine', 'sunshine');
-				PlayState.isStoryMode = false;
-				PlayState.storyDifficulty = 2;
-				PlayState.storyWeek = 1;
-				FlxTransitionableState.skipNextTransIn = true;
-				FlxTransitionableState.skipNextTransOut = true;
-				flashyWashy(true);
-				if (!FlxG.save.data.songArray.contains('sunshine') && !FlxG.save.data.botplay) FlxG.save.data.songArray.push('sunshine');
-				new FlxTimer().start(2, function(tmr:FlxTimer)
-				{
-					LoadingState.loadAndSwitchState(new PlayState());
-				});
-			}
-		else if (first == 8 && second == 21)
-			{
-				woahmanstopspammin = false;
-				PlayStateChangeables.nocheese = false;
-				PlayState.isFreeplay = false;
-				PlayState.SONG = Song.loadFromJson('chaos-hard', 'chaos');
-				PlayState.isStoryMode = false;
-				PlayState.storyDifficulty = 2;
-				PlayState.storyWeek = 1;
-				FlxTransitionableState.skipNextTransIn = true;
-				FlxTransitionableState.skipNextTransOut = true;
-				flashyWashy(true);
-				new FlxTimer().start(2, function(tmr:FlxTimer)
-				{
-					LoadingState.loadAndSwitchState(new PlayState());
-				});
-				if (!FlxG.save.data.songArray.contains('chaos') && !FlxG.save.data.botplay) FlxG.save.data.songArray.push('chaos');
-			}
-		else if (first == 0 && second == 0)
-			{
-				woahmanstopspammin = false;
-				PlayStateChangeables.nocheese = false;
-				PlayState.isFreeplay = false;
-				PlayState.SONG = Song.loadFromJson('too-fest-hard', 'too-fest');
-				PlayState.isStoryMode = false;
-				PlayState.storyDifficulty = 2;
-				PlayState.storyWeek = 1;
-				FlxTransitionableState.skipNextTransIn = true;
-				FlxTransitionableState.skipNextTransOut = true;
-				flashyWashy(true);
-				new FlxTimer().start(2, function(tmr:FlxTimer)
-				{
-					LoadingState.loadAndSwitchState(new PlayState());
-				});
-			}
-		else if (first == 41 && second == 1) 
-		{
-			woahmanstopspammin = false;
-			flashyWashy(true);
-			new FlxTimer().start(2, function(tmr:FlxTimer)
-			{
-				cameoImg.visible = true;
-				cameoImg.loadGraphic(Paths.image('cameostuff/Razencro'));
-				cameoImg.setSize(1280, 720);
-				flashyWashy(false);
-				FlxG.sound.music.stop();
+		var balls = Std.string(first) + "|" + Std.string(second);
 
-			});
-			new FlxTimer().start(2.1, function(tmr:FlxTimer)
-			{
-				FlxG.sound.playMusic(Paths.music('cameostuff/Razencro'));	
-				incameo = true;
-			});
-		}
-		else if (first == 1 && second == 13) // This for you div, R.I.P
-			{
-				woahmanstopspammin = false;
-				flashyWashy(true);
-				new FlxTimer().start(2, function(tmr:FlxTimer)
-				{
-					cameoImg.visible = true;
-					cameoImg.loadGraphic(Paths.image('cameostuff/divide'));
-					cameoImg.setSize(1280, 720);
-					flashyWashy(false);
-					FlxG.sound.music.stop();
-	
-				});
-				new FlxTimer().start(2.1, function(tmr:FlxTimer)
-				{
-					incameo = true;
-				});
-			}
-		else if (first == 9 && second == 10) // This for you div, R.I.P
-			{
-				woahmanstopspammin = false;
-				flashyWashy(true);
-				new FlxTimer().start(2, function(tmr:FlxTimer)
-				{
-					cameoImg.visible = true;
-					cameoImg.loadGraphic(Paths.image('cameostuff/Sunkeh'));
-					cameoImg.setSize(1280, 720);
-					flashyWashy(false);
-					FlxG.sound.music.stop();
-	
-				});
-				new FlxTimer().start(2.1, function(tmr:FlxTimer)
-				{
-					incameo = true;
-				});
-			}
-		else if (first == 6 && second == 6) // This for you div, R.I.P
-			{
-				woahmanstopspammin = false;
-				flashyWashy(true);
-				new FlxTimer().start(2, function(tmr:FlxTimer)
-				{
-					cameoImg.visible = true;
-					cameoImg.loadGraphic(Paths.image('cameostuff/GamerX'));
-					cameoImg.setSize(1280, 720);
-					flashyWashy(false);
-					FlxG.sound.music.stop();
-	
-				});
-				new FlxTimer().start(2.1, function(tmr:FlxTimer)
-				{
-					incameo = true;
-				});
-			}
-		else if (first == 23 && second == 23) 
-			{
-				var video:MP4Handler = new MP4Handler();
-				woahmanstopspammin = false;
-				flashyWashy(true);
-				new FlxTimer().start(2, function(tmr:FlxTimer)
-				{
-					flashyWashy(false);
-					FlxG.sound.music.stop();
-	
-				});
-				new FlxTimer().start(2.1, function(tmr:FlxTimer)
-				{
-                	video.playMP4(Paths.video('Keel'));
-					incameo = true;
-				});
-			}
-		else if (first == 12 && second == 34) 
-			{
-				var video:MP4Handler = new MP4Handler();
-				woahmanstopspammin = false;
-				flashyWashy(true);
-				new FlxTimer().start(2, function(tmr:FlxTimer)
-				{
-					flashyWashy(false);
-					FlxG.sound.music.stop();
-	
-				});
-				new FlxTimer().start(2.1, function(tmr:FlxTimer)
-				{
-                	video.playMP4(Paths.video('Milky'));
-					incameo = true;
-				});
-			}
-		else if (first == 32 && second == 8) 
-		{
-			woahmanstopspammin = false;
-			flashyWashy(true);
-			new FlxTimer().start(2, function(tmr:FlxTimer)
-			{
-				cameoImg.visible = true;
-				cameoImg.loadGraphic(Paths.image('cameostuff/Marstarbro'));
-				cameoImg.setSize(1280, 720);
-				flashyWashy(false);
-				FlxG.sound.music.stop();
+		//So shit doesn't get too confusing
+		var imgPath:String; //CAN BE USED FOR VID OR IMG DONT CARE
+		var musPath:String;
 
-			});
-			new FlxTimer().start(2.1, function(tmr:FlxTimer)
-			{
-				FlxG.sound.playMusic(Paths.music('cameostuff/Marstarbro'));	
-				incameo = true;
-			});
-		}
-		else
+		switch (balls) //multiple if statements bug me idk why lol
 		{
-			if (soundCooldown)
+			case '69|37':
 			{
-				soundCooldown = false;
-				FlxG.sound.play(Paths.sound('deniedMOMENT'));
-				new FlxTimer().start(0.8, function(tmr:FlxTimer)
-				{
-					soundCooldown = true;
-				});
+				PlayState.isFreeplay = false;
+				PlayState.isStoryMode = false;
+				loadSong('weight-of-the-universe');
 			}
-        }
+			case '17|17':
+			{
+				imgPath = Paths.image('CAMEOS/holofunk_jumpscare', 'exe');
+				musPath = Paths.music('CAMEOS/VineBoom', 'exe');
+
+				loadCameo(function(){loadImg(imgPath, musPath);});
+			}
+			case '12|34':
+			{
+				imgPath = Paths.video('BinpukiAmeFall');
+
+				loadCameo(function(){loadVid(imgPath);});
+			}
+			default:
+			{
+				if (soundCooldown)
+				{
+					soundCooldown = false;
+					FlxG.sound.play(Paths.sound('deniedMOMENT', 'exe'));
+					new FlxTimer().start(0.8, function(tmr:FlxTimer)
+					{
+						soundCooldown = true;
+					});
+				}
+			}
+		}
 	}
 		
 	override public function update(elapsed:Float)
 		{
 			if (FlxG.keys.justPressed.RIGHT || FlxG.keys.justPressed.LEFT || FlxG.keys.justPressed.A || FlxG.keys.justPressed.D) if (woahmanstopspammin) funnymonke = !funnymonke;
 
-			if (FlxG.keys.justPressed.DOWN || FlxG.keys.justPressed.S) if (woahmanstopspammin) changeNumber(1);
-
-			if (FlxG.keys.justPressed.UP || FlxG.keys.justPressed.W) if (woahmanstopspammin) changeNumber(-1);
+			//Added shift for speed up because convenience lol
+			if (FlxG.keys.justPressed.DOWN || FlxG.keys.justPressed.S) if (woahmanstopspammin) if (FlxG.keys.pressed.SHIFT) changeNumber(10); else changeNumber(1);
+			if (FlxG.keys.justPressed.UP || FlxG.keys.justPressed.W) if (woahmanstopspammin) if (FlxG.keys.pressed.SHIFT) changeNumber(-10); else changeNumber(-1);
 
 			if (FlxG.keys.justPressed.ENTER && woahmanstopspammin) doTheThing(pcmValue, daValue);
 
@@ -447,15 +240,58 @@ class SoundTestMenu extends MusicBeatState
 			if (daValue < 10)	daNO_NUMBER.text = '0' + Std.string(daValue);
 			else daNO_NUMBER.text = Std.string(daValue);
 
-					
-
-					
-
-
-
-
 			super.update(elapsed);
 		}
 	
+    function loadSong(song:String)
+    {
+        //mfs really copy pasting code lmaooo
+        woahmanstopspammin = false;
+		PlayStateChangeables.nocheese = false;
+		PlayState.SONG = Song.loadFromJson(song + '-hard', song);
+		PlayState.storyDifficulty = 2;
+		PlayState.storyWeek = 1;
+		FlxTransitionableState.skipNextTransIn = true;
+		FlxTransitionableState.skipNextTransOut = true;
+		flashyWashy(true);
+		new FlxTimer().start(2, function(tmr:FlxTimer)
+		{
+			LoadingState.loadAndSwitchState(new PlayState());
+		});
+		if (!FlxG.save.data.songArray.contains(song) && !FlxG.save.data.botplay) FlxG.save.data.songArray.push(song);
+    }
 
+	function loadCameo(onComplete:()->Void) //load cameo shit idk lol
+	{
+		woahmanstopspammin = false;
+		flashyWashy(true);
+
+		new FlxTimer().start(2, function(tmr:FlxTimer)
+		{
+			flashyWashy(false);
+			FlxG.sound.music.stop();
+			incameo = true;
+			onComplete();
+		});
+	}
+
+	//SUB FUNCTIONS FOR WHEN THE FLASHY SHIT DOES THE UH
+	//THE UH
+	//THE UHHHHHHHHHHHHHHHHHHHH
+	//THE THING
+
+	function loadVid(path:String, ?musicPath:String):Void
+	{
+		var video:MP4Handler = new MP4Handler();
+        video.playVideo(path);
+	}
+
+	function loadImg(path:String, ?musicPath:String):Void
+	{
+		cameoImg.visible = true;
+		cameoImg.loadGraphic(path);
+		cameoImg.setSize(1280, 720);
+
+		if (musicPath != null) FlxG.sound.playMusic(musicPath);	
+	}
 }
