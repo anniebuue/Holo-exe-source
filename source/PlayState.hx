@@ -325,6 +325,8 @@ class PlayState extends MusicBeatState
 		{
 			Main.dumpCache(); // Honestly it's just preloading so idrc.
 
+			if (FlxG.save.data.jumpscares == null) FlxG.save.data.jumpscare = true; //belh
+
 			// PRELOADING STUFFS
 			if (SONG.song.toLowerCase() == 'too-seiso' && FlxG.save.data.jumpscares)
 			{
@@ -3221,7 +3223,8 @@ class PlayState extends MusicBeatState
 		var songCalc = (songLength - curTime);
 		var secondsTotal:Int = Math.floor(songCalc / 1000);
 		if(secondsTotal < 0) secondsTotal = 0;
-		songName.text = SONG.song + " (" + FlxStringUtil.formatTime(secondsTotal, false) + ")";
+		
+		if (songName != null) songName.text = SONG.song + " (" + FlxStringUtil.formatTime(secondsTotal, false) + ")";
 
 		//now for the rating thingies
 		for (i in 0...curSongRatings.length)
