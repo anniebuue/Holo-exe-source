@@ -115,6 +115,19 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 
+			case 'parent':
+				// DAD ANIMATION LOADING CODE
+				frames = Paths.getSparrowAtlas('characters/ParentAssets', 'shared');
+				animation.addByPrefix('idle', 'mio idle', 24);
+				animation.addByPrefix('singUP', 'mio up', 24);
+				animation.addByPrefix('singRIGHT', 'mio right', 24);
+				animation.addByPrefix('singDOWN', 'mio down', 24);
+				animation.addByPrefix('singLEFT', 'mio left', 24);
+
+				loadOffsetFile(curCharacter);
+
+				playAnim('idle');
+
 			case 'ina':
 				tex = Paths.getSparrowAtlas('characters/ina', 'shared');
 				frames = tex;

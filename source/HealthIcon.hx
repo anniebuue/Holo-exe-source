@@ -41,7 +41,7 @@ class HealthIcon extends FlxSprite
 			char = char.split("-")[0];
 
 		if (!OpenFlAssets.exists(Paths.image('icons/icon-' + char)))
-			char = 'face';
+			char = 'bf';
 
 		loadGraphic(Paths.loadImage('icons/icon-' + char), true, 150, 150);
 

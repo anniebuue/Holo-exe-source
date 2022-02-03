@@ -647,6 +647,91 @@ class PlayState extends MusicBeatState
 						if (!lowQuality)
 							sticklol.animation.play('a', true);
 					}
+				case 'parent':
+					{
+						defaultCamZoom = .95;
+						curStage = 'parent';
+
+						var sky:FlxSprite = new FlxSprite(-631.8, -493.15).loadGraphic(Paths.image('STAGES/parent/sky', 'exe'));
+						sky.antialiasing = true;
+						sky.scrollFactor.set(1, 1);
+						sky.active = false;
+						sky.scale.x = .9;
+						sky.scale.y = .9;
+						add(sky);
+
+						var mountains:FlxSprite = new FlxSprite(-631.8, -475.5).loadGraphic(Paths.image('STAGES/parent/mountains', 'exe'));
+						mountains.antialiasing = true;
+						mountains.scrollFactor.set(1.1, 1);
+						mountains.active = false;
+						mountains.scale.x = .9;
+						mountains.scale.y = .9;
+						add(mountains);
+
+						var grass:FlxSprite = new FlxSprite(-631.8, -475.5).loadGraphic(Paths.image('STAGES/parent/grass', 'exe'));
+						grass.antialiasing = true;
+						grass.scrollFactor.set(1.2, 1);
+						grass.active = false;
+						grass.scale.x = .9;
+						grass.scale.y = .9;
+						add(grass);
+
+						var tree2:FlxSprite = new FlxSprite(-631.8, -475.5).loadGraphic(Paths.image('STAGES/parent/tree2', 'exe'));
+						tree2.antialiasing = true;
+						tree2.scrollFactor.set(1.225, 1);
+						tree2.active = false;
+						tree2.scale.x = .9;
+						tree2.scale.y = .9;
+						add(tree2);
+
+						var pillar2:FlxSprite = new FlxSprite(-631.8, -459.55).loadGraphic(Paths.image('STAGES/parent/pillar2', 'exe'));
+						pillar2.antialiasing = true;
+						pillar2.scrollFactor.set(1.25, 1);
+						pillar2.active = false;
+						pillar2.scale.x = .9;
+						pillar2.scale.y = .9;
+						add(pillar2);
+
+						var plant:FlxSprite = new FlxSprite(-631.8, -493.15).loadGraphic(Paths.image('STAGES/parent/plant', 'exe'));
+						plant.antialiasing = true;
+						plant.scrollFactor.set(1.25, 1);
+						plant.active = false;
+						plant.scale.x = .9;
+						plant.scale.y = .9;
+						add(plant);
+
+						var tree1:FlxSprite = new FlxSprite(-631.8, -493.15).loadGraphic(Paths.image('STAGES/parent/tree1', 'exe'));
+						tree1.antialiasing = true;
+						tree1.scrollFactor.set(1.25, 1);
+						tree1.active = false;
+						tree1.scale.x = .9;
+						tree1.scale.y = .9;
+						add(tree1);
+
+						var pillar1:FlxSprite = new FlxSprite(-631.8, -493.15).loadGraphic(Paths.image('STAGES/parent/pillar1', 'exe'));
+						pillar1.antialiasing = true;
+						pillar1.scrollFactor.set(1.25, 1);
+						pillar1.active = false;
+						pillar1.scale.x = .9;
+						pillar1.scale.y = .9;
+						add(pillar1);
+
+						var flower1:FlxSprite = new FlxSprite(-631.8, -493.15).loadGraphic(Paths.image('STAGES/parent/flower1', 'exe'));
+						flower1.antialiasing = true;
+						flower1.scrollFactor.set(1.25, 1);
+						flower1.active = false;
+						flower1.scale.x = .9;
+						flower1.scale.y = .9;
+						add(flower1);
+
+						var flower2:FlxSprite = new FlxSprite(-631.8, -493.15).loadGraphic(Paths.image('STAGES/parent/flower2', 'exe'));
+						flower2.antialiasing = true;
+						flower2.scrollFactor.set(1.25, 1);
+						flower2.active = false;
+						flower2.scale.x = .9;
+						flower2.scale.y = .9;
+						add(flower2);
+					}
 				//TEMPORARY LOL
 				case 'painted':
 					{
@@ -741,9 +826,10 @@ class PlayState extends MusicBeatState
 		gf = new Character(400, 130, curGf);
 		gf.scrollFactor.set(0.95, 0.95);
 
-		if (curStage == 'snow')
+		switch (curStage)
 		{
-			gf.scrollFactor.set(1.37, 1);
+			case 'snow': gf.scrollFactor.set(1.37, 1);
+			case 'parent': gf.scrollFactor.set(1.24, 1);
 		}
 
 		dad = new Character(100, 100, SONG.player2);
@@ -820,6 +906,17 @@ class PlayState extends MusicBeatState
 				dad.scrollFactor.set(1.37, 1);
 				boyfriend.scrollFactor.set(1.37, 1);
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y - 100);
+			case 'parent':
+				gf.x += 200;
+				gf.y += 100;
+				dad.scrollFactor.set(1.25, 1);
+				boyfriend.scrollFactor.set(1.25, 1);
+				boyfriend.x = 318.95 + 500;
+				boyfriend.y = 494.2 - 150;
+				dad.y += 14.3;
+				dad.x += 59.85;
+
+				gf.y -= 150;
 			case 'painted':
 				boyfriend.x += 140;
 				boyfriend.y += 160;
@@ -911,6 +1008,10 @@ class PlayState extends MusicBeatState
 		{
 			case 'too-seiso':
 				FlxG.camera.follow(camFollow, LOCKON, 0.05 * (30 / (cast(Lib.current.getChildAt(0), Main)).getFPS()));
+			
+			case 'parent':
+				//fakertransform.setPosition(dad.getGraphicMidpoint().x - 400, dad.getGraphicMidpoint().y - 400);
+				FlxG.camera.follow(camFollow, LOCKON, 0.04 * (30 / (cast(Lib.current.getChildAt(0), Main)).getFPS()));
 
 			default:
 				FlxG.camera.follow(camFollow, LOCKON, 0.04 * (30 / (cast(Lib.current.getChildAt(0), Main)).getFPS()));

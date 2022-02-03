@@ -171,6 +171,12 @@ class SoundTestMenu extends MusicBeatState
 
 		switch (balls) //multiple if statements bug me idk why lol
 		{
+			case '13|9':
+			{
+				PlayState.isFreeplay = false;
+				PlayState.isStoryMode = false;
+				loadSong('parent');
+			}
 			case '69|37':
 			{
 				PlayState.isFreeplay = false;
